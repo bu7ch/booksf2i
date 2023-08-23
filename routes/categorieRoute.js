@@ -1,31 +1,19 @@
-const router = require('express').Router()
-const PlayerTennis = require('../models/playerModel')
-const PlayerFootball = require('../models/playerFootball')
-const PlayerRugby = require('../models/playerRugby')
-router.get('/tennis', (req, res) =>{
-  const newPlayer = new PlayerTennis({
-    name: 'Beatrice',
-    nationality: 'Française'
-  })
- newPlayer.save()
-  res.send(newPlayer)
-})
-router.get('/football', (req, res) =>{
-  const player = new PlayerFootball({
-    name: 'Billy',
-    nationality: 'USA'
-  })
-  player.save()
-  res.send(player)
-})
-router.get('/rugby', (req, res) =>{
-  const player = new PlayerRugby({
-    name: 'Klauss',
-    nationality: 'Nouvelle-Zelande'
-  })
-  player.save()
-  res.send(player)
-})
+const router = require("express").Router();
+const {
+  createTennis,
+  updatePlayer,
+} = require("../controllers/tennisController");
+const {
+  createFootball,
+  updatePlayerF,
+} = require("../controllers/footballController");
+const { createRugby, updatePlayerR } = require("../controllers/rugbyController");
 
+router.get("/tennis", createTennis);
+router.put("/tennis/:player_id", updatePlayer);
+router.get("/football", createFootball);
+router.put("/football/:player_id", updatePlayerF);
+router.get("/rugby", createRugby);
+router.put("/rugby/:player_id", updatePlayerR);
 
-module.exports = router
+module.exports = router;
