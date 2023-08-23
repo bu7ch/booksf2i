@@ -10,21 +10,30 @@ const createTennis = (req, res) => {
 };
 
 const updatePlayer = async (req, res) => {
-  const id = req.params.player_id
+  const id = req.params.player_id;
   const updateData = {
     name: req.body.name,
     nationality: req.body.nationality,
   };
   try {
-   
-    const player = await PlayerTennis.findOneAndUpdate(
-      {_id: id},
-      updateData
-    );
-    res.send({ msg: "Player updated!", player});
+    const player = await PlayerTennis.findOneAndUpdate({ _id: id }, updateData);
+    res.send({ msg: "Player updated!", player });
   } catch (err) {
     console.log({ msg: "erreur d'ajout" });
   }
 };
+const deletePlayer = async (req, res) => {
+  const id = req.params.player_id;
+  await PlayerTennis.deleteOne({ _id: id });
+  res.send({ msg: " Player successfully deleted!" });
+};
 
-module.exports = { createTennis, updatePlayer };
+const allPlayers = async (req, res) => {
+  try {
+    const players = await PlayerTennis.find()
+    res.send(players)
+  } catch (error) {
+    console.log({ msg: ` ${error.message}` });
+  }
+};
+module.exports = { createTennis, updatePlayer, deletePlayer, allPlayers };

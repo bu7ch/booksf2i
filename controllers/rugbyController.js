@@ -16,7 +16,7 @@ const updatePlayerR = async (req, res) => {
   };
   try {
    
-    const player = await PlayerTennis.findOneAndUpdate(
+    const player = await PlayerRugby.findOneAndUpdate(
       {_id: id},
       updateData
     );
@@ -25,5 +25,10 @@ const updatePlayerR = async (req, res) => {
     console.log({ msg: "erreur d'ajout" });
   }
 };
+const deletePlayerR = async (req, res) => {
+  const id = req.params.player_id;
+  const player = await PlayerRugby.deleteOne({_id:id});
+  res.send({ msg: " Player successfully deleted!" });
+};
 
-module.exports = {createRugby, updatePlayerR};
+module.exports = {createRugby, updatePlayerR, deletePlayerR};
